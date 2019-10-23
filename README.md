@@ -11,5 +11,8 @@ It used on flickr's API.
 Apply for an API key [here](https://www.flickr.com/services/apps/create/apply).
 
 
-## Reference project 
-Figure out structure of flickr network [TiagoMaiaL](https://github.com/TiagoMaiaL/Virtual-Tourist) 
+## Work Flow
+- Study Flickr API
+- Create Network 
+
+> Step by step !
