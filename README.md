@@ -12,6 +12,8 @@ Apply for an API key [here](https://www.flickr.com/services/apps/create/apply).
 
 ## Reference 
 [플리커 API활용](http://www.isquery.com/wiki/doku.php?id=flickr)
+[사진검색](https://www.flickr.com/services/api/flickr.photos.search.html)
+
 
 - Login Test 
 
