@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+struct Location: Codable {
+    let latitude: Double
+    let longitude: Double
+    let location: String
+    let country: String
+    
+    enum CodingKeys: String, CodingKey {
+        case location, country, latitude, longitude
+    }
+}

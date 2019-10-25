@@ -10,19 +10,6 @@ It used on flickr's API.
 ## Flickr API Key apply on Apps
 Apply for an API key [here](https://www.flickr.com/services/apps/create/apply).
 
-## Reference 
-[플리커 API활용](http://www.isquery.com/wiki/doku.php?id=flickr)
-[사진검색](https://www.flickr.com/services/api/flickr.photos.search.html)
 
-
-- Login Test 
-
-```
-https://api.flickr.com/services/rest/?method=flickr.test.echo&api_key=a700dbe3e34048606e970f8af6fd4fb4&format=json
-```
-```json
-jsonFlickrApi(
-              {"method":{"_content":"flickr.test.echo"},
-              "api_key":{"_content":"a700dbe3e34048606e970f8af6fd4fb4"},
-               "format":{"_content":"json"},"stat":"ok"})
-```
+## Reference project 
+Figure out structure of flickr network [TiagoMaiaL](https://github.com/TiagoMaiaL/Virtual-Tourist) 
