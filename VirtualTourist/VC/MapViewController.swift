@@ -197,18 +197,19 @@ class MapViewController: UIViewController {
 //        performSegue(withIdentifier: "showPhotoAlbum",  sender: (true, pinAnnotation))
 //    }
 //
-    
-      // This delegate method is implemented to respond to taps. It opens the system browser
-      // to the URL specified in the annotationViews subtitle property.
-      func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-          
-          mapView.deselectAnnotation(view.annotation, animated: true)
-          guard let annotation = view.annotation else { return }
-          
-          let pinAnnotation = annotation as! AnnotationPin
-          performSegue(withIdentifier: "showPhotoAlbum",  sender: (true, pinAnnotation))
-    
-      }
+
+/// Blocked avoiding bugs  
+// This delegate method is implemented to respond to taps. It opens the system browser
+// to the URL specified in the annotationViews subtitle property.
+//      func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+//          
+//          mapView.deselectAnnotation(view.annotation, animated: true)
+//          guard let annotation = view.annotation else { return }
+//          
+//          let pinAnnotation = annotation as! AnnotationPin
+//          performSegue(withIdentifier: "showPhotoAlbum",  sender: (true, pinAnnotation))
+//    
+//    }
     
 
   
