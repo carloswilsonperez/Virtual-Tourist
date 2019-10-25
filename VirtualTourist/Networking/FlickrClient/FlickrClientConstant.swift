@@ -9,15 +9,17 @@
 import Foundation
 
 
-class FlickrClientConstant {
-
+extension FlickrClient {
     
-    enum API {
+   enum API {
        static let BaseUrl = "https://api.flickr.com/services/rest/"
-        
     }
     
-    enum ParameterKeys {
+   enum Methods {
+        static let PhotosSearch = "flickr.photos.search"
+    }
+
+    enum ParamKeys {
         static let APIKey = "api_key"
         static let Method = "method"
         static let Format = "format"
@@ -33,7 +35,7 @@ class FlickrClientConstant {
         static let Sort = "sort"
     }
 
-    enum ParameterDefaultValues {
+    enum ParamDefaultValue {
         static let Format = "json"
         static let NoJsonCallback = "1"
         static let ExtraMediumURL = "url_m"

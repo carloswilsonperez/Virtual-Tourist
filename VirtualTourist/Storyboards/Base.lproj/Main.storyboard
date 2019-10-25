@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wjn-Kw-EnD">
-    <device id="retina6_5" orientation="portrait" appearance="dark"/>
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Virtual Tourist-->
+        <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="Virtual Tourist" customClass="MapViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="Map View Controller" customClass="MapViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -18,9 +18,8 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3WT-8D-t8a">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                             </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UtI-LK-LxF">
-                                <rect key="frame" x="20" y="117" width="374" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Press the button. Pin will put on the map" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UtI-LK-LxF" userLabel="NoticeLabel">
+                                <rect key="frame" x="53" y="117" width="308.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -30,7 +29,9 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="3WT-8D-t8a" secondAttribute="bottom" id="97i-2h-Cjt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3WT-8D-t8a" secondAttribute="trailing" id="MrL-XU-rfm"/>
+                            <constraint firstItem="UtI-LK-LxF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="29" id="WHM-h8-dgH"/>
                             <constraint firstItem="3WT-8D-t8a" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="aw4-ZV-1GX"/>
+                            <constraint firstItem="UtI-LK-LxF" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="yG6-lh-s7J"/>
                             <constraint firstItem="3WT-8D-t8a" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zru-eP-bgD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -38,6 +39,11 @@
                     <navigationItem key="navigationItem" title="Location" id="TG2-k6-eB5">
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="pQR-cY-4ry"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="3WT-8D-t8a" id="HXg-cG-Vuo"/>
+                        <outlet property="noticeLabel" destination="UtI-LK-LxF" id="bds-oW-B8I"/>
+                        <segue destination="aI6-gS-joL" kind="presentation" identifier="showPhotoAlbum" modalPresentationStyle="fullScreen" id="xsT-4l-BCg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -59,7 +65,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <state key="normal" title="NEW COLLECTION">
-                                    <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aZd-Ne-Dsz">
@@ -86,6 +92,10 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="bmN-Y3-6dp">
+                                                    <rect key="frame" x="40" y="50" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                         </view>
                                         <size key="customSize" width="100" height="100"/>
@@ -125,7 +135,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="knG-6L-dSj"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Sap-ZX-ZrE"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I1J-zm-ATb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
