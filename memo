@@ -17,3 +17,28 @@ https://www.flickr.com/services/api/flickr.photos.search.html
         secret="d123456" server="2" title="00_tall"
         ispublic="1" isfriend="0" isfamily="0" />
 </photos>
+
+
+2. garbage
+
+fileprivate func setUpFetchedResultsController() {
+   let fetchRequest:NSFetchRequest<Pin> = Pin.fetchRequest()
+   let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
+   fetchRequest.sortDescriptors = [sortDescriptor]
+ 
+   fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "pins")
+   fetchedResultsController.delegate = self
+
+    if let pins = fetchedResultsController.fetchedObjects {
+       for pin in pins  {
+            let coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
+            let annotation = AnnotationPin(pin: pin)
+            annotation.coordinate = coordinate
+            annotation.title = pin.locationName
+            annotation.subtitle = pin.country
+            DispatchQueue.main.async {
+            self.mapView.addAnnotation(annotation)
+        }
+      }
+    }
+}

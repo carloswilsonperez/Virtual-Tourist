@@ -49,28 +49,6 @@ class MapViewController: UIViewController {
 //            print("Error fetching Pins: \(error)")
 //        }
 //    }
-    fileprivate func setUpFetchedResultsController() {
-       let fetchRequest:NSFetchRequest<Pin> = Pin.fetchRequest()
-       let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
-       fetchRequest.sortDescriptors = [sortDescriptor]
-     
-       fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "pins")
-       fetchedResultsController.delegate = self
-
-        if let pins = fetchedResultsController.fetchedObjects {
-           for pin in pins  {
-                let coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
-                let annotation = AnnotationPin(pin: pin)
-                annotation.coordinate = coordinate
-                annotation.title = pin.locationName
-                annotation.subtitle = pin.country
-                DispatchQueue.main.async {
-                self.mapView.addAnnotation(annotation)
-            }
-          }
-        }
-    }
-    
 
     @IBAction func longPressOnMap(_ sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
@@ -103,8 +81,8 @@ class MapViewController: UIViewController {
         let annotation = MKPointAnnotation()
         CLGeocoder().reverseGeocodeLocation(geoPos) { (placemarks, error) in
             guard let placemark = placemarks?.first else { return }
-            annotation.title = (placemark.name ?? "Not Known")
-            annotation.subtitle = (placemark.country ?? "")
+            annotation.title = placemark.name ?? "Not Known"
+            annotation.subtitle = placemark.country
             annotation.coordinate = coordinate
             self.copyLocation(annotation)
         }
@@ -113,7 +91,8 @@ class MapViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let photoAlbumViewController = segue.destination as? AlbumCollectionViewController else { return }
-        
+        let pinAnnotation: AnnotationPin = sender as! AnnotationPin
+        photoAlbumViewController.pin = pinAnnotation.pin
     }
 
       //  let pinAnnotation: AnnotationPinView = sender as! AnnotationPinView
@@ -153,12 +132,15 @@ class MapViewController: UIViewController {
     
         let pinAnnotation = annotation as! AnnotationPin
         pinAnnotation.title = pinAnnotation.pin.locationName
-        
+        pinAnnotation.subtitle = pinAnnotation.pin.country
+    
+        print("\(String(describing: pinAnnotation.title)) \(String(describing: pinAnnotation.subtitle))")
+   
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = false
+            pinView!.canShowCallout = true
             pinView!.pinTintColor = .red
-         //   pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIButton
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIButton
         } else {
             pinView!.annotation = annotation
         }
@@ -190,27 +172,15 @@ class MapViewController: UIViewController {
         }
     }
     
-//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//        guard let annotation = view.annotation else { return }
-//
-//        let pinAnnotation = annotation as! AnnotationPin
-//        performSegue(withIdentifier: "showPhotoAlbum",  sender: (true, pinAnnotation))
-//    }
-//
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let annotation = view.annotation else { return }
 
-/// Blocked avoiding bugs  
-// This delegate method is implemented to respond to taps. It opens the system browser
-// to the URL specified in the annotationViews subtitle property.
-//      func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-//          
-//          mapView.deselectAnnotation(view.annotation, animated: true)
-//          guard let annotation = view.annotation else { return }
-//          
-//          let pinAnnotation = annotation as! AnnotationPin
-//          performSegue(withIdentifier: "showPhotoAlbum",  sender: (true, pinAnnotation))
-//    
-//    }
-    
+        let pinAnnotation = annotation as! AnnotationPin
+        performSegue(withIdentifier: "showPhotoAlbum",  sender: pinAnnotation)
+        
+        mapView.deselectAnnotation(view.annotation, animated: false)
+    }
+
 
   
  }
