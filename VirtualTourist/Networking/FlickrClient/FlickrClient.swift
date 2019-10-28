@@ -7,43 +7,9 @@
 //
 
 import Foundation
-<<<<<<< Updated upstream
 import UIKit
 
 /// Connect with Flickr's API
-
-class FlickrClient {
-    /// get photos from Flickr for a specific pin
-    /// - Param.
-    ///   - pin:
-    func getFlickrPhotos(fromPin pin: Pin, totalPage page: Int, completion: @escaping (Pin?, Int?, Error?) -> Void) {
-      //  let pin = pin.objectID
-        
-        
-    }
-    
-    func getPinImages(fromPin pin: Pin, totalPage page: Int, completion: @escaping (FlickrSearchData?, Error?) -> Void) {
-        let parameter = [
-            ParamKeys.APIKey: ParamDefaultValue.APIKey,
-            ParamKeys.Format: ParamDefaultValue.Format,
-            ParamKeys.NoJsonCallback: ParamDefaultValue.NoJsonCallback,
-            ParamKeys.Method: Methods.PhotosSearch,
-            ParamKeys.Extra: ParamDefaultValue.ExtraMediumURL,
-            ParamKeys.Page: String(page),
-            ParamKeys.RadiusUnits: ParamDefaultValue.RadiusUnits,
-            ParamKeys.Radius: ParamDefaultValue.Radius,
-            ParamKeys.ResultsPerPage: ParamDefaultValue.ResultsPerPage,
-
-        
-        ]
-        
-        
-        
-    }
-    
-}
-=======
-
 class FlickrClient {
     static let apiKey = "0a7e1179f73468f0ba09d3e87c1241f7"
     static let keySecret = "f8698fce474bdf25"
@@ -157,5 +123,3 @@ class FlickrClient {
          task.resume()
     }
 }
-
->>>>>>> Stashed changes

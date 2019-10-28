@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 extension AlbumCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+    
    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         let sections = fetchedResultsController.sections ?? []
@@ -22,13 +26,13 @@ extension AlbumCollectionViewController: UICollectionViewDelegate, UICollectionV
 
         return count
     }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>)
-        
-
-    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//
+//      //  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>)
+//
+//
+//    }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        let photo = fetchedResultsController.object(at: indexPath)
