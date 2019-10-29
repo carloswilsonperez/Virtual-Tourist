@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class PhotoViewCell: UICollectionViewCell {
     
@@ -16,28 +17,20 @@ class PhotoViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "Cell"
     
-    func initPhotoCell() {
-        setActivityIndicator(true)
-        
-        
-        
-    }
-    
 
-    func setPhotoImageView(_ imageView: UIImage, sizeFit: Bool) {
+    func setPhotoImageView(imageView: UIImage, sizeFit: Bool) {
         photoImageView.image = imageView
         if sizeFit == true {
             photoImageView.sizeToFit()
         }
     }
     
-    func setActivityIndicator(_ flag: Bool) {
-        if flag {
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
-        }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.photoImageView.image = UIImage()
+        self.activityIndicator.startAnimating()
     }
+    
     
 }
 

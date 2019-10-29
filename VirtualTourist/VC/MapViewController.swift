@@ -93,6 +93,7 @@ class MapViewController: UIViewController {
         guard let photoAlbumViewController = segue.destination as? AlbumCollectionViewController else { return }
         let pinAnnotation: AnnotationPin = sender as! AnnotationPin
         photoAlbumViewController.pin = pinAnnotation.pin
+        photoAlbumViewController.dataController = dataController
     }
 
       //  let pinAnnotation: AnnotationPinView = sender as! AnnotationPinView

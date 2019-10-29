@@ -34,12 +34,43 @@ class AlbumCollectionViewController: UIViewController {
         }
         
         navTitle.title = pin.locationName ?? "Album"
-        setUpMapView()
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setUpMapView()
+        setupFetchedResultsController()
+        downloadPhotoData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        fetchedResultsController = nil
+    }
+    // Setting up fetched results controller
+       private func setupFetchedResultsController() {
+           let fetchRequest:NSFetchRequest<Photo> = Photo.fetchRequest()
+          
+           if let pin = pin {
+               let predicate = NSPredicate(format: "pin == %@", pin)
+               fetchRequest.predicate = predicate
+            
+               print("\(pin.latitude) \(pin.longitude)")
+           }
+           let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: true)
+           fetchRequest.sortDescriptors = [sortDescriptor]
+           
+           fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                                 managedObjectContext: dataController.viewContext,
+                                                                 sectionNameKeyPath: nil, cacheName: "photo")
+           fetchedResultsController.delegate = self
+
+           do {
+               try fetchedResultsController.performFetch()
+           } catch {
+               fatalError("The fetch could not be performed: \(error.localizedDescription)")
+           }
+       }
     func showAlert(title: String, message: String){
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -53,27 +84,28 @@ class AlbumCollectionViewController: UIViewController {
             dataController.viewContext.delete(image)
     
         }
+        downloadPhotoData()
     }
     
     func downloadPhotoData() {
-      
+
         // manage activity indicator : start running
-        guard fetchedResultsController.fetchedObjects != nil else {
+        guard (fetchedResultsController.fetchedObjects?.isEmpty)! else {
             // show alarm
             print("image metadata is already present. no need to re download")
             return
         }
-        
+
         let pagesCount = Int(self.pin.pages)
         let annotation = AnnotationPin(pin: pin)
         FlickrClient.getPhotos(latitude: annotation.pin.latitude,longitude: annotation.pin.longitude,
                                totalPageAmount: pagesCount) { (photos, totalPages, error) in
-            
-        guard photos.count == 0 else {
+
+        guard photos.count > 0 else {
             print("Error!")
             return
         }
-                        
+
         if pagesCount == 0 {
             self.pin.pages = Int32(totalPages)
         }
@@ -84,24 +116,63 @@ class AlbumCollectionViewController: UIViewController {
             newPhoto.imageData = nil
             newPhoto.pin = self.pin
             newPhoto.imageID = UUID().uuidString
-            
+
             do {
                 try self.dataController.viewContext.save()
             } catch {
                 print("Can't save photoes!!")
             }
-            
+
         }
-         
+
         // manage activity indicator : stop
       }
-        
+
+    }
+
+    
+    
+    @IBAction func OnPressedDelete(_ sender: Any) {
+       removeSelectedImages()
+       dismiss(animated: true, completion: nil)
     }
     
-    
-    
-    
 
+    @IBAction func OnPressedDone(_ sender: Any) {
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func removeSelectedImages() {
+      var imageIds: [String] = []
+           
+           // All the index paths for the selected images are returned
+           if let selectedImagesIndexPaths = collectionView.indexPathsForSelectedItems {
+               for indexPath in selectedImagesIndexPaths {
+                   let selectedImageToRemove = fetchedResultsController.object(at: indexPath)
+                   
+                if let imageId = selectedImageToRemove.imageID {
+                       imageIds.append(imageId)
+                   }
+               }
+               
+               for imageId in imageIds {
+                   if let selectedImages = fetchedResultsController.fetchedObjects {
+                       for image in selectedImages {
+                           if image.imageID == imageId {
+                               dataController.viewContext.delete(image)
+                           }
+                           do {
+                               try dataController.viewContext.save()
+                           } catch {
+                               print("Unable to remove the photo")
+                           }
+                       }
+                   }
+               }
+           }
+        
+    }
 }
 
 

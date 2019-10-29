@@ -105,9 +105,9 @@
 		88895676235DB02800E9743E /* VirtualTourist */ = {
 			isa = PBXGroup;
 			children = (
+				88E083F6235F2FBE006DFBB0 /* FlickrClient */,
 				88D6F60D235DEB52002734FD /* VC */,
 				88895693235DD79100E9743E /* Storyboards */,
-				88895692235DCBE600E9743E /* Networking */,
 				8889568F235DB9EB00E9743E /* Model */,
 				88895677235DB02800E9743E /* AppDelegate.swift */,
 				88895679235DB02800E9743E /* SceneDelegate.swift */,
@@ -130,14 +130,6 @@
 				881EEBB923673703001C478C /* PhotoStruct.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		88895692235DCBE600E9743E /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-				88E083F6235F2FBE006DFBB0 /* FlickrClient */,
-			);
-			path = Networking;
 			sourceTree = "<group>";
 		};
 		88895693235DD79100E9743E /* Storyboards */ = {

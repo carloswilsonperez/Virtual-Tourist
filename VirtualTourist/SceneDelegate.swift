@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = window?.rootViewController as! UINavigationController
         let mapview = navigationController.topViewController as! MapViewController
         mapview.dataController = (UIApplication.shared.delegate as? AppDelegate)?.dataController
+        
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 
