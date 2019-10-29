@@ -1,5 +1,5 @@
 //
-//  photoViewCell.swift
+//  PhotoViewCell.swift
 //  VirtualTourist
 //
 //  Created by 강선미 on 27/10/2019.
@@ -8,10 +8,13 @@
 
 import UIKit
 
-class photoViewCell: UICollectionViewCell {
+class PhotoViewCell: UICollectionViewCell {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var checkMarkView: CheckMarkView!
+    
+    static let reuseIdentifier = "Cell"
     
     func initPhotoCell() {
         setActivityIndicator(true)
@@ -21,6 +24,13 @@ class photoViewCell: UICollectionViewCell {
     }
     
 
+    func setPhotoImageView(_ imageView: UIImage, sizeFit: Bool) {
+        photoImageView.image = imageView
+        if sizeFit == true {
+            photoImageView.sizeToFit()
+        }
+    }
+    
     func setActivityIndicator(_ flag: Bool) {
         if flag {
             activityIndicator.startAnimating()

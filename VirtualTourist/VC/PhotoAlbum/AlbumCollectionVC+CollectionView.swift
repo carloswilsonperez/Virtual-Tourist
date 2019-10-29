@@ -9,38 +9,30 @@
 import Foundation
 import UIKit
 extension AlbumCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
-    }
-    
-   
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        let sections = fetchedResultsController.sections ?? []
 
-        return sections.isEmpty ? 0 : 1
-    }
+//
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        let sections = fetchedResultsController.sections ?? []
+//
+//        return sections.isEmpty ? 0 : 1
+//    }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
         let count = fetchedResultsController.sections?[section].numberOfObjects ?? 0
-
         return count
     }
 //
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//
-//      //  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>)
-//
-//
-//    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let photo = fetchedResultsController.object(at: indexPath)
-//
-//        performSegue(withIdentifier: "showPhotoDetails", sender: photo)
+       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoViewCell.reuseIdentifier, for: indexPath as IndexPath) as! PhotoViewCell
+       let imageName = String("image\(indexPath.row + 1).png")
+       cell.photoImageView.image = UIImage(named: imageName)
+       cell.checkMarkView.style = .grayedOut
+       cell.checkMarkView.setNeedsDisplay()
+       
+        return cell
     }
-
-
+    
     /// Set up the Collection View.
     func setUpCollectionView() {
         // Set up Collection View

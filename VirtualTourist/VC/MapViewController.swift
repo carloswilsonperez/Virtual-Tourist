@@ -140,7 +140,7 @@ class MapViewController: UIViewController {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.pinTintColor = .red
-            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIButton
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             pinView!.annotation = annotation
         }
@@ -172,15 +172,23 @@ class MapViewController: UIViewController {
         }
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+//        guard let annotation = view.annotation else { return }
+//
+//        let pinAnnotation = annotation as! AnnotationPin
+//        performSegue(withIdentifier: "showPhotoAlbum",  sender: pinAnnotation)
+//
+//        mapView.deselectAnnotation(view.annotation, animated: false)
+//    }
+
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let annotation = view.annotation else { return }
 
         let pinAnnotation = annotation as! AnnotationPin
         performSegue(withIdentifier: "showPhotoAlbum",  sender: pinAnnotation)
-        
+
         mapView.deselectAnnotation(view.annotation, animated: false)
+        
     }
-
-
   
  }
