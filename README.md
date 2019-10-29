@@ -10,6 +10,5 @@ It used on flickr's API.
 ## Flickr API Key apply on Apps
 Apply for an API key [here](https://www.flickr.com/services/apps/create/apply).
 
-
-## Reference project 
-Figure out structure of flickr network [TiagoMaiaL](https://github.com/TiagoMaiaL/Virtual-Tourist) 
+## Reference
+[CheckMark](https://github.com/maximbilan/CheckMarkView)
