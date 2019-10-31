@@ -183,12 +183,23 @@ class MapViewController: UIViewController {
 //    }
 
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let annotation = view.annotation else { return }
-
-        let pinAnnotation = annotation as! AnnotationPin
-        performSegue(withIdentifier: "showPhotoAlbum",  sender: pinAnnotation)
 
         mapView.deselectAnnotation(view.annotation, animated: false)
+        guard let _ = view.annotation else {
+                return
+            }
+        if let annotation = view.annotation as? MKPointAnnotation {
+            do {
+                let predicate = NSPredicate(format: "longitude = %@ AND latitude = %@", argumentArray: [annotation.coordinate.longitude, annotation.coordinate.latitude])
+                let pindata = try dataController.fetchLocation(predicate)!
+                let annotationPin = AnnotationPin(pin: pindata)
+                self.performSegue(withIdentifier: "showPhotoAlbum", sender: annotationPin)
+            } catch {
+                print("There was an error!!")
+            }
+        }
+        
+       
         
     }
   

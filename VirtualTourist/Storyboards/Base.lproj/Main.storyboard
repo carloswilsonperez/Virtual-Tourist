@@ -72,7 +72,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <state key="normal" title="NEW COLLECTION">
-                                    <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="newCollection:" destination="aI6-gS-joL" eventType="touchUpInside" id="KeI-eX-qRq"/>
@@ -107,21 +107,19 @@
                                                     <rect key="frame" x="0.0" y="-5" width="100" height="100"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="pOC-7R-9zX">
-                                                    <rect key="frame" x="40" y="40" width="20" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </activityIndicatorView>
                                             </subviews>
                                         </view>
                                         <size key="customSize" width="100" height="100"/>
                                         <connections>
-                                            <outlet property="activityIndicator" destination="pOC-7R-9zX" id="Q2s-uX-0RQ"/>
-                                            <outlet property="checkMarkView" destination="Y96-KT-REG" id="upe-Rj-Peq"/>
                                             <outlet property="photoImageView" destination="ctg-MG-BJD" id="JXs-dH-woQ"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="z43-qr-XmR" userLabel="Activity Indicator">
+                                <rect key="frame" x="188.66666666666666" y="434.66666666666669" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Au7-5y-4vG">
                                 <rect key="frame" x="0.0" y="66" width="414" height="240"/>
                             </mapView>
@@ -147,11 +145,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Rkn-e9-Bqy" firstAttribute="bottom" secondItem="9BS-mb-tYn" secondAttribute="bottom" constant="1" id="11y-XA-Rwi"/>
+                            <constraint firstItem="z43-qr-XmR" firstAttribute="centerX" secondItem="9BS-mb-tYn" secondAttribute="centerX" id="2Wr-PH-FtG"/>
                             <constraint firstItem="Rkn-e9-Bqy" firstAttribute="leading" secondItem="aZd-Ne-Dsz" secondAttribute="leading" id="9Ug-7r-ftR"/>
                             <constraint firstItem="aZd-Ne-Dsz" firstAttribute="top" secondItem="Au7-5y-4vG" secondAttribute="bottom" id="Dhh-1N-FzE"/>
                             <constraint firstItem="aZd-Ne-Dsz" firstAttribute="leading" secondItem="9BS-mb-tYn" secondAttribute="leading" id="HLX-xA-uOW"/>
                             <constraint firstItem="Rkn-e9-Bqy" firstAttribute="top" secondItem="aZd-Ne-Dsz" secondAttribute="bottom" constant="2" id="JwE-Ij-lb8"/>
                             <constraint firstItem="Rkn-e9-Bqy" firstAttribute="trailing" secondItem="aZd-Ne-Dsz" secondAttribute="trailing" id="LSZ-i9-fWD"/>
+                            <constraint firstItem="z43-qr-XmR" firstAttribute="centerY" secondItem="9BS-mb-tYn" secondAttribute="centerY" id="O4Y-Bh-U5y"/>
                             <constraint firstItem="Rkn-e9-Bqy" firstAttribute="trailing" secondItem="Au7-5y-4vG" secondAttribute="trailing" id="lUQ-VC-cZB"/>
                             <constraint firstItem="9BS-mb-tYn" firstAttribute="trailing" secondItem="aZd-Ne-Dsz" secondAttribute="trailing" id="lbT-J7-qva"/>
                             <constraint firstItem="Au7-5y-4vG" firstAttribute="top" secondItem="9BS-mb-tYn" secondAttribute="top" constant="22" id="mpH-3B-ZHS"/>
@@ -161,6 +161,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="Cef-fE-ma0"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="z43-qr-XmR" id="VQF-gF-Efx"/>
                         <outlet property="collectionView" destination="aZd-Ne-Dsz" id="lqU-fW-zzC"/>
                         <outlet property="deleteButton" destination="sCf-cg-vRY" id="HY7-b0-jdj"/>
                         <outlet property="doneButton" destination="Vzg-2y-JLa" id="BkU-zr-inU"/>

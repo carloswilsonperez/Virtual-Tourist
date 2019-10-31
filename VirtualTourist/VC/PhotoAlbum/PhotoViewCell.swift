@@ -11,11 +11,10 @@ import CoreData
 
 class PhotoViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+   
     @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var checkMarkView: CheckMarkView!
-    
-    static let reuseIdentifier = "Cell"
+
+    static let reuseIdentifier = "PhotoViewCell"
     
 
     func setPhotoImageView(imageView: UIImage, sizeFit: Bool) {
@@ -25,11 +24,11 @@ class PhotoViewCell: UICollectionViewCell {
         }
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.photoImageView.image = UIImage()
-        self.activityIndicator.startAnimating()
-    }
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        self.photoImageView.image = UIImage()
+//       
+//    }
     
     
 }

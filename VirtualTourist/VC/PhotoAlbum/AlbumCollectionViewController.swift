@@ -19,6 +19,7 @@ class AlbumCollectionViewController: UIViewController {
     @IBOutlet weak var newCollectionButton: UIButton!
     @IBOutlet weak var navTitle: UINavigationItem!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var fetchedResultsController: NSFetchedResultsController<Photo>!
     var pin: Pin!
@@ -34,6 +35,7 @@ class AlbumCollectionViewController: UIViewController {
         }
         
         navTitle.title = pin.locationName ?? "Album"
+        setUpCollectionView()
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +43,7 @@ class AlbumCollectionViewController: UIViewController {
         setUpMapView()
         setupFetchedResultsController()
         downloadPhotoData()
+     
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,7 +51,7 @@ class AlbumCollectionViewController: UIViewController {
         fetchedResultsController = nil
     }
     // Setting up fetched results controller
-       private func setupFetchedResultsController() {
+       fileprivate func setupFetchedResultsController() {
            let fetchRequest:NSFetchRequest<Photo> = Photo.fetchRequest()
           
            if let pin = pin {
@@ -64,6 +67,8 @@ class AlbumCollectionViewController: UIViewController {
                                                                  managedObjectContext: dataController.viewContext,
                                                                  sectionNameKeyPath: nil, cacheName: "photo")
            fetchedResultsController.delegate = self
+        print(fetchedResultsController.cacheName!)
+        print(fetchedResultsController.fetchedObjects?.count ?? 0)
 
            do {
                try fetchedResultsController.performFetch()
@@ -82,55 +87,62 @@ class AlbumCollectionViewController: UIViewController {
         guard let imageObject = fetchedResultsController.fetchedObjects else { return }
         for image in imageObject {
             dataController.viewContext.delete(image)
-    
+           do {
+               try dataController.viewContext.save()
+           } catch {
+                print("Unable to delete images")
+            }
         }
         downloadPhotoData()
     }
+
+    
     
     func downloadPhotoData() {
-
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         // manage activity indicator : start running
+        print("\(String(describing: fetchedResultsController.fetchedObjects?.count))")
         guard (fetchedResultsController.fetchedObjects?.isEmpty)! else {
-            // show alarm
+            activityIndicator.isHidden = true
+            activityIndicator.stopAnimating()
             print("image metadata is already present. no need to re download")
             return
         }
 
         let pagesCount = Int(self.pin.pages)
-        let annotation = AnnotationPin(pin: pin)
-        FlickrClient.getPhotos(latitude: annotation.pin.latitude,longitude: annotation.pin.longitude,
+      //  let annotation = AnnotationPin(pin: pin)
+        FlickrClient.getPhotos(latitude: pin.latitude,longitude: pin.longitude,
                                totalPageAmount: pagesCount) { (photos, totalPages, error) in
-
-        guard photos.count > 0 else {
-            print("Error!")
-            return
-        }
-
-        if pagesCount == 0 {
-            self.pin.pages = Int32(totalPages)
-        }
-        // run for loop
-        for photo in photos {
-            let newPhoto = Photo(context: self.dataController.viewContext)
-            newPhoto.imageUrl = URL(string: photo.url_m)
-            newPhoto.imageData = nil
-            newPhoto.pin = self.pin
-            newPhoto.imageID = UUID().uuidString
-
-            do {
-                try self.dataController.viewContext.save()
-            } catch {
-                print("Can't save photoes!!")
+            
+        if photos.count > 0 {
+            DispatchQueue.main.async {
+                if (pagesCount == 0) {
+                    self.pin.pages = Int32(Int(totalPages))
+                }
+                for photo in photos {
+                    let newPhoto = Photo(context: self.dataController.viewContext)
+                    newPhoto.imageUrl = URL(string: photo.url_m)
+                    newPhoto.imageData = nil
+                    newPhoto.pin = self.pin
+                    newPhoto.imageID = UUID().uuidString
+                    
+                    do {
+                        try self.dataController.viewContext.save()
+                    } catch {
+                        print("Unable to save the photo")
+                    }
+                }
+                
+                print("capi")
             }
-
         }
-
-        // manage activity indicator : stop
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
       }
 
     }
 
-    
     
     @IBAction func OnPressedDelete(_ sender: Any) {
        removeSelectedImages()
