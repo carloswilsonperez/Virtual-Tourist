@@ -17,19 +17,15 @@ class DataController {
         return persistentContainer.viewContext
     }
     
-    let backgroundContext:NSManagedObjectContext!
+    //let backgroundContext:NSManagedObjectContext!
     
-    init(modelName:String) {
+    private init(modelName:String) {
         persistentContainer = NSPersistentContainer(name: modelName)
-        
-        backgroundContext = persistentContainer.newBackgroundContext()
+       // backgroundContext = persistentContainer.newBackgroundContext()
     }
     
     func configureContexts() {
         viewContext.automaticallyMergesChangesFromParent = true
-        backgroundContext.automaticallyMergesChangesFromParent = true
-        
-        backgroundContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
         viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
     }
     
@@ -43,6 +39,14 @@ class DataController {
             completion?()
         }
     }
+    /// save current context
+    func save() throws {
+        if viewContext.hasChanges {
+            try viewContext.save()
+        }
+    }
+    
+    static let shared = DataController(modelName: "VirtualTourist")
 }
 
 // MARK: - Autosaving

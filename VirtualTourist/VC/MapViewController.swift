@@ -51,13 +51,16 @@ class MapViewController: UIViewController {
 //    }
 
     @IBAction func longPressOnMap(_ sender: UILongPressGestureRecognizer) {
+       
         if sender.state == .began {
+            // add a PIN to the map
             noticeLabel.text = "put finger to add pin"
-        } else {
+        } else if sender.state == .ended {
             // Get the coordinates of the tapped location on the map.
             let locationCoordinate = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
             noticeLabel.text = "long press to add new location"
             saveGeoCoordination(from: locationCoordinate)
+
         }
         
     }
