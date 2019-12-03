@@ -17,6 +17,3 @@ Apply for an API key [here](https://www.flickr.com/services/apps/create/apply).
 - Use URLSessions to interact with a public restful API
 - Create a user interface that intuitively communicates network activity and download progress
 - Store media on the device file system Use Core Data for local persistence of an object structure
-
-## Reference
-[CheckMark](https://github.com/maximbilan/CheckMarkView)
