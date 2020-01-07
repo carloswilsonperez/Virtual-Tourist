@@ -19,7 +19,7 @@ class DataController {
     
     //let backgroundContext:NSManagedObjectContext!
     
-    private init(modelName:String) {
+    init(modelName:String) {
         persistentContainer = NSPersistentContainer(name: modelName)
        // backgroundContext = persistentContainer.newBackgroundContext()
     }

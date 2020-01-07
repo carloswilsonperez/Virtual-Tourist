@@ -146,7 +146,7 @@ class AlbumCollectionViewController: UIViewController {
     
     @IBAction func OnPressedDelete(_ sender: Any) {
        removeSelectedImages()
-       dismiss(animated: true, completion: nil)
+      // dismiss(animated: true, completion: nil)
     }
     
 
