@@ -39,16 +39,6 @@ class MapViewController: UIViewController {
        
      }
     
-    
-//    dataController.viewContext.perform {
-//      do {
-//        let pins = try self.dataController.viewContext.fetch(request)
-//        self.mapView.addAnnotations(pins.map { pin in AnnotationPin(pin: pin) })
-//
-//        } catch {
-//            print("Error fetching Pins: \(error)")
-//        }
-//    }
 
     @IBAction func longPressOnMap(_ sender: UILongPressGestureRecognizer) {
        
